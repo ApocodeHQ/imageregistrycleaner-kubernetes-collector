@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      serviceAccountName: {{ .Release.Name }}
+      containers:
+      - name: main
+        env:
+        {{- range $envName, $envValue := .Values.environment }}
+        - name: {{ $envName }}
+          value: '{{ $envValue }}'
+        {{- end }}
+        image: {{ .Values.image.name }}:{{ .Values.image.tag }}

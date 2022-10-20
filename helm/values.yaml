@@ -1,0 +1,5 @@
+image:
+  name: 'apocode/imageregistrycleaner-kubernetes-collector'
+  tag: '0.0.3'
+
+environment: {}
